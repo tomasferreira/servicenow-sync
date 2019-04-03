@@ -5,6 +5,10 @@ const request = require('request');
 
 const URL = 'https://dev65260.service-now.com/api/now/table/sys_script_include/29c2578adb20330016b4112039961996';
 
+// TODO: read url from config file
+// TODO: how / where to store sys_ids of the script
+// TODO: how to store (encrypted) credentials
+
 async function syncFile(){
   var script = vscode.window.activeTextEditor.document.getText();
   vscode.window.showErrorMessage('preparing request');
