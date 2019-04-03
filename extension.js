@@ -1,11 +1,36 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
-const https = require('https');
+const request = require('request');
 
+const URL = 'https://dev65260.service-now.com/api/now/table/sys_script_include/29c2578adb20330016b4112039961996';
 
 async function syncFile(){
-  vscode.window.showErrorMessage('oh no');
+  var script = vscode.window.activeTextEditor.document.getText();
+  vscode.window.showErrorMessage('preparing request');
+  request.put(URL, {
+    auth: {
+      user: 'test',
+      pass: 'tesst'
+    },
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    json: true,
+    body: {
+      script: script
+    }
+  }, processResponse);
+  
+  function processResponse(error, response, responseBody){
+    if(error){
+      vscode.window.showErrorMessage('Something went wrong while sending file - HTTP response code: ' + response.statusCode);
+    }
+    console.log(error);
+    console.log(response);
+    console.log(responseBody);
+  }
 };
 
 // this method is called when your extension is activated
